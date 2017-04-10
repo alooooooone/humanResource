@@ -1,0 +1,1 @@
+HrTotal.vue
