@@ -198,5 +198,28 @@ router.post('/addNewStaff',(req,res) => {
 		}
 	})
 })
+//用户账户密码信息
+router.get('/allUser',(req,res) => {
+	var sql = $sql.user.userInfo;
+	conn.query(sql,function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.json(result);
+		}
+	})
+})
+//修改用户密码
+router.post('/changePs',(req,res) => {
+	var sql = $sql.user.changePs;
+	var params = req.body;
+	conn.query(sql,[params.second_new_ps,params.name],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.end(JSON.stringify({status:'100',msg:'修改成功'}));
+		}
+	})
+})
 
 module.exports = router;

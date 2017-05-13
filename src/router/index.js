@@ -15,6 +15,8 @@ import Login from '@/components/login'
 import StaffInfo	from	'@/components/function/human/StaffInfo'
 import Hr from '@/components/Hr'
 import addNewStaff from '@/components/function/human/addNewStaff'
+import allUser from '@/components/function/setting/allUser'
+import changePs from '@/components/function/setting/changepassword'
 
 Vue.use(Router)
 
@@ -58,7 +60,11 @@ export default new Router({
     	},{
     		path: 'setting',
     		name: 'SystemSetting',
-    		component: SystemSetting
+    		component: SystemSetting,
+        children: [
+          {path:'alluser',name:'AllUser',component:allUser},
+          {path:'changeps',name:'changePS',component:changePs}
+        ]
     	}]
     },
     {

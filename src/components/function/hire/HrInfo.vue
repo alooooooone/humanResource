@@ -13,13 +13,13 @@
 			</thead>
 			<tbody>
 				<tr v-for="(item,index) in hrInfo">
-					<td class="col-sm-3">{{item.jobname}}</td>
+					<td class="col-sm-2">{{item.jobname}}</td>
 					<td class="col-sm-2">{{item.jobkind}}</td>
-					<td class="col-sm-1">{{item.jobtype}}</td>
-					<td class="col-sm-1">{{item.jobaddress}}</td>
-					<td class="col-sm-1">{{item.jobquantity}}</td>
-					<td class="col-sm-2">{{item.releasetime}}</td>
-					<td class="col-sm-2"><a href="" data-toggle="modal" data-target="#detail" v-on:click="jobDetail(index)"><span class="glyphicon glyphicon-heart"></span> 详情>>></a></td>
+					<td class="col-sm-2">{{item.jobtype}}</td>
+					<td class="col-sm-2">{{item.jobaddress}}</td>
+					<td class="col-sm-2">{{item.jobquantity}}</td>
+					<td class="col-sm-1">{{item.releasetime}}</td>
+					<td class="col-sm-1"><a href="" data-toggle="modal" data-target="#detail" v-on:click="jobDetail(index)"><span class="glyphicon glyphicon-heart"></span> 详情>>></a></td>
 				</tr>
 			</tbody>
 		</table>

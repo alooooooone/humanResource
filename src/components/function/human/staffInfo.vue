@@ -1,7 +1,9 @@
 <template>
 	<div>
-		<div class="form-group">
-			<input type="text" name="serch" class="form-control" placeholder="员工姓名／职位／部门" v-model="searchkey">
+		<div class="form-inline">
+			<div class="form-group">
+				<input type="text" name="serch" class="form-control" placeholder="员工姓名／职位／部门" v-model="searchkey">
+			</div>
 			<button class="btn btn-primary" @click="search">查询</button>
 		</div>
 		<table class="table" v-if="searchflag">

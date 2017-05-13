@@ -19,7 +19,9 @@ var sqlMap = {
         searchInfo: 'SELECT * FROM staffInfo WHERE name = ? OR duties = ? OR depart = ?',
         deleteHireInfo: 'DELETE FROM hrInfo WHERE id = ?',
         deleteStaff: 'DELETE FROM staffInfo WHERE id = ?',
-        addNewStaff: 'INSERT INTO staffInfo(id,name,sex,birth,education,profession,address,duties,salary,checkin,depart,status,phone) VALUES( ?,?,?,?,?,?,?,?,?,?,?,?,? )'
+        addNewStaff: 'INSERT INTO staffInfo(id,name,sex,birth,education,profession,address,duties,salary,checkin,depart,status,phone) VALUES( ?,?,?,?,?,?,?,?,?,?,?,?,? )',
+        userInfo: 'SELECT * FROM user',
+        changePs: 'UPDATE user SET password=? WHERE username=?'
     }
 }
 
