@@ -14,6 +14,7 @@ import HrArrange from '@/components/function/hire/HrArrange'
 import Login from '@/components/login'
 import StaffInfo	from	'@/components/function/human/StaffInfo'
 import Hr from '@/components/Hr'
+import addNewStaff from '@/components/function/human/addNewStaff'
 
 Vue.use(Router)
 
@@ -38,7 +39,10 @@ export default new Router({
     		path: 'human',
     		name: 'HumanManage',
     		component: HumanManage,
-    		children: [{path:'staffinfo',name: 'StaffInfo',component: StaffInfo}]
+    		children: [
+          {path:'staffinfo',name: 'StaffInfo',component: StaffInfo},
+          {path:'addnewstaff',name: 'addNewStaff',component: addNewStaff}
+        ]
     	},{
     		path: 'check',
     		name: 'CheckOnWorkManage',

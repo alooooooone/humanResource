@@ -2,13 +2,7 @@
   <div>
     <div class="col-sm-3">
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#">请假管理</a></li>
-        <li><a href="#">出差管理</a></li>
-        <li><a href="#">加班管理</a></li>
-        <li><a href="#">出勤管理</a></li>
-        <li><a href="#">请假报表</a></li>
-        <li><a href="#">出差报表</a></li>
-        <li><a href="#">加班报表</a></li>
+        <li><a href="#">考勤管理</a></li>
         <li><a href="#">出勤报表</a></li>
       </ul>
     </div>

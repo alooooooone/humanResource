@@ -74,7 +74,7 @@ router.get('/staffInfo', (req, res) => {
 router.post('/updateStaff',(req,res) => {
 	  var sql = $sql.user.updateStaff;
 	  var params = req.body;
-	  console.log(req.body);
+	  //console.log(req.body);
 	  conn.query(sql,[ params.name,params.sex,params.birth,params.education
 	  	,params.profession,params.address,params.duties,params.salary
 	  	,params.checkin,params.depart,params.status,params.phone,params.id ],function (err,result) {
@@ -84,6 +84,18 @@ router.post('/updateStaff',(req,res) => {
 	  			res.end(JSON.stringify({status:'100',msg:'保存成功'}));
 	  		}
 	  	})
+});
+//删除员工信息
+router.post('/deleteStaff',(req,res) => {
+	var sql = $sql.user.deleteStaff;
+	var params = req.body;
+	conn.query(sql,[params.id],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.end(JSON.stringify({status:'100',msg:'删除成功'}));
+		}
+	})
 });
 //查询员工
 router.post('/search',(req,res) => {
@@ -127,6 +139,18 @@ router.post('/updateHrInfo',(req,res) => {
 	  		}
 	  	})
 });
+//删除招聘信息
+router.post('/deleteHireInfo',(req,res) => {
+	var sql = $sql.user.deleteHireInfo;
+	var params = req.body;
+	conn.query(sql,[params.id],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.end(JSON.stringify({status:'100',msg:'删除成功'}));
+		}
+	})
+})
 //添加新的招聘信息
 router.post('/addHireInfo',(req,res) => {
 	var sql = $sql.user.addHireInfo;
@@ -159,6 +183,18 @@ router.get('/getResume',(req,res) => {
 			throw err;
 		}else{
 			res.json(result);
+		}
+	})
+})
+//添加新员工
+router.post('/addNewStaff',(req,res) => {
+	var sql = $sql.user.addNewStaff;
+	var params = req.body;
+	conn.query(sql,[ params.id,params.name,params.sex,params.birth,params.education,params.profession,params.address,params.duties,params.salary,params.checkin,params.depart,params.status,params.phone ],function(err,result){
+		if(err){
+			throw err;
+		}else{
+			res.end(JSON.stringify({status:'100',msg:'添加成功'}));
 		}
 	})
 })

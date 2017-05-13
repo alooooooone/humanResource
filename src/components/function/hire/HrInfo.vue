@@ -64,7 +64,7 @@
 						<button class="btn btn-danger" @click.prevent="edit" v-bind:style="editbtn">修改</button>
 						<button class="btn btn-primary" @click.prevent="save" v-bind:style="savebtn">保存</button>
 						<button class="btn btn-primary"  v-bind:style="savebtn" @click.prevent="exit">取消</button>
-						<button class="btn btn-danger">删除</button>
+						<button class="btn btn-danger" @click="deleteHireInfo">删除</button>
 						<button class="btn btn-primary" data-dismiss="modal" @click.prevent="exit">退出</button>
 					</div>
 				</div>
@@ -187,7 +187,7 @@
 				.then((res) => {
 					console.log(res);
 					//self.hrInfo.push(self.newhireinfo);
-					Location.reload();
+					location.reload();
 				});
 				this.newhireinfo = {};
 				$('#hireinfo').modal('hide');
@@ -195,6 +195,12 @@
 			cancleHireInfo: function() {
 				this.newhireinfo = {};
 				$('#hireinfo').modal('hide');
+			},
+			deleteHireInfo: function() {
+				this.$http.post('/api/user/deleteHireInfo',this.jobInfo)
+				.then((res) => {
+					location.reload();
+				});
 			}
 		}
 	}

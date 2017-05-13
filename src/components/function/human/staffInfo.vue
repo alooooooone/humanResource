@@ -20,6 +20,7 @@
 					<td>{{item.name}}</td>
 					<td>{{item.duties}}</td>
 					<td>{{item.depart}}</td>
+					<td><a href='' v-on:click='searchDetail(index)' data-toggle="modal" data-target="#staffdetail">详情信息>>></a></td>
 				</tr>
 			</tbody>
 		</table>
@@ -35,7 +36,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(item,index) in staffInfo.body">
+				<tr v-for="(item,index) in staffInfo">
 					<td class="col-sm-1">{{item.id}}</td>
 					<td class="col-sm-2">{{item.name}}</td>
 					<td class="col-sm-2">{{item.address}}</td>
@@ -128,7 +129,7 @@
 						<button class="btn btn-primary" v-on:click.prevent="edit" v-bind:style="editbtn">编辑</button>
 						<button class="btn btn-primary" v-on:click.prevent="save" v-bind:style="display">保存</button>
 						<button class="btn btn-primary" v-on:click.prevent='cancle' v-bind:style="display">取消</button>
-						<button class="btn btn-danger">删除</button>
+						<button class="btn btn-danger" v-on:click.prevent='deleteStaff'>删除</button>
 						<button class="btn btn-default" data-dismiss="modal" v-on:click.prevent='cancle'>退出</button>
 					</div>
 				</div>
@@ -154,7 +155,10 @@
 		},
 		methods: {
 			detail: function (index) {
-				this.staffdetail = this.staffInfo.body[index];
+				this.staffdetail = this.staffInfo[index];
+			},
+			searchDetail: function (index) {
+				this.staffdetail = this.searchResult[index];
 			},
 			edit:function () {
 				this.display = "display:inline-block";
@@ -164,21 +168,7 @@
 			save:function () {
 				var staff = staffdetail;
 			  var self = this;
-				this.$http.post('/api/user/updateStaff',{
-					id: this.staffdetail.id,
-					name: this.staffdetail.name,
-					sex: this.staffdetail.sex,
-					birth: this.staffdetail.birth,
-					education: this.staffdetail.education,
-					profession: this.staffdetail.profession,
-					address: this.staffdetail.address,
-					duties: this.staffdetail.duties,
-					salary: this.staffdetail.salary,
-					checkin: this.staffdetail.checkin,
-					depart: this.staffdetail.depart,
-					status: this.staffdetail.status,
-					phone: this.staffdetail.phone
-				})
+				this.$http.post('/api/user/updateStaff',this.staffdetail)
 				.then((res) => {
 					//console.log(res);
 					self.flag = true;
@@ -201,13 +191,21 @@
 					this.searchlength = res.body.length;
 					this.searchflag = true;
 				});
+			},
+			deleteStaff: function () {
+				self = this;
+				this.$http.post('/api/user/deleteStaff',this.staffdetail)
+				.then((res) => {
+					self.staffInfo.splice(self.staffInfo.indexOf(self.staffdetail),1);
+					console.log(res.body.msg)
+				})
 			}
 		},
 		mounted: function () {
 			this.$http.get('/api/user/staffInfo')
 			.then((res)=>{
 				//console.log(res);
-				this.staffInfo = res;
+				this.staffInfo = res.body;
 				this.length = res.body.length;
 			})
 		}

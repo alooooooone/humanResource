@@ -16,7 +16,10 @@ var sqlMap = {
         searchName: 'SELECT * FROM staffInfo WHERE name = ?',
         searchDuties: 'SELECT * FROM staffInfo WHERE duties = ?',
         searchDepart: 'SELECT * FROM staffInfo WHERE depart = ?',
-        searchInfo: 'SELECT * FROM staffInfo WHERE name = ? OR duties = ? OR depart = ?'
+        searchInfo: 'SELECT * FROM staffInfo WHERE name = ? OR duties = ? OR depart = ?',
+        deleteHireInfo: 'DELETE FROM hrInfo WHERE id = ?',
+        deleteStaff: 'DELETE FROM staffInfo WHERE id = ?',
+        addNewStaff: 'INSERT INTO staffInfo(id,name,sex,birth,education,profession,address,duties,salary,checkin,depart,status,phone) VALUES( ?,?,?,?,?,?,?,?,?,?,?,?,? )'
     }
 }
 
