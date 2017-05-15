@@ -186,6 +186,59 @@ router.get('/getResume',(req,res) => {
 		}
 	})
 })
+//安排面试
+router.post('/interviewArrange',(req,res) => {
+	var sql = $sql.user.addInterview;
+	var params = req.body;
+	conn.query(sql,[ params.id,params.name,params.email,params.phone,params.interviewer,params.date,params.time,params.status,params.pass ],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.end(JSON.stringify({status:'100',msg:'安排成功'}));
+		}
+	})
+})
+//录入人才库
+router.post('/passInterview',(req,res) => {
+	var sql = $sql.user.passInterview;
+	var sql1 = $sql.user.updateInterview;
+	var params = req.body;
+	conn.query(sql,[ params.name,params.phone,params.email,params.id ],function (err) {
+		if(err){
+			throw err;
+		}else{
+			conn.query(sql1, ['通过','已经录入',params.id],function(err) {
+				if(err){
+					throw err;
+				}else{
+					res.end(JSON.stringify({status:'100',msg:'录入成功'}));
+				}
+			})
+		}
+	});
+})
+//获取人才库信息
+router.get('/getTalent',(req,res) => {
+	var sql = $sql.user.getTalent;
+	conn.query(sql,function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.json(result);
+		}
+	})
+})
+//获取所有面试安排
+router.get('/getInterview',(req,res) => {
+	var sql = $sql.user.getInterview;
+	conn.query(sql,function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.json(result);
+		}
+	})
+})
 //添加新员工
 router.post('/addNewStaff',(req,res) => {
 	var sql = $sql.user.addNewStaff;
@@ -218,6 +271,17 @@ router.post('/changePs',(req,res) => {
 			throw err;
 		}else{
 			res.end(JSON.stringify({status:'100',msg:'修改成功'}));
+		}
+	})
+})
+//获取培训信息
+router.get('/trainInfo',(req,res) => {
+	var sql = $sql.user.trainInfo;
+	conn.query(sql,function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.json(result);
 		}
 	})
 })

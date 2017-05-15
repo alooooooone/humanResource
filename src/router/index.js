@@ -17,6 +17,8 @@ import Hr from '@/components/Hr'
 import addNewStaff from '@/components/function/human/addNewStaff'
 import allUser from '@/components/function/setting/allUser'
 import changePs from '@/components/function/setting/changepassword'
+import talent from '@/components/function/hire/talent'
+import trainInfo from '@/components/function/train/trainInfo'
 
 Vue.use(Router)
 
@@ -35,7 +37,8 @@ export default new Router({
     			{path: 'hrinfo',name: 'HrInfo',component: HrInfo},
     			{path: 'resume',name: 'HrResume',component: HrResume},
     			{path: 'job',name: 'HrJob',component: HrJob},
-    			{path: 'total',name: 'HrArrange',component: HrArrange}
+          {path: 'arrange',name: 'HrArrange',component: HrArrange},
+    			{path: 'talent',name: 'talent',component: talent}
     		]
     	},{
     		path: 'human',
@@ -52,7 +55,10 @@ export default new Router({
     	},{
     		path: 'train',
     		name: 'TrainManage',
-    		component: TrainManage
+    		component: TrainManage,
+        children: [
+          {path:'traininfo',name: 'trainInfo',component: trainInfo}
+        ]
     	},{
     		path: 'salary',
     		name: 'SalaryManage',

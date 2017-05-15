@@ -21,7 +21,14 @@ var sqlMap = {
         deleteStaff: 'DELETE FROM staffInfo WHERE id = ?',
         addNewStaff: 'INSERT INTO staffInfo(id,name,sex,birth,education,profession,address,duties,salary,checkin,depart,status,phone) VALUES( ?,?,?,?,?,?,?,?,?,?,?,?,? )',
         userInfo: 'SELECT * FROM user',
-        changePs: 'UPDATE user SET password=? WHERE username=?'
+        changePs: 'UPDATE user SET password=? WHERE username=?',
+        addInterview: 'INSERT INTO interview(id,name,email,phone,interviewer,date,time,status,pass) VALUES(?,?,?,?,?,?,?,?,?)',
+        getInterview: 'SELECT * FROM interview',
+        passInterview: 'INSERT INTO talent(name,phone,email,id) VALUES(?,?,?,?)',
+        updateInterview: 'UPDATE interview SET status=?,pass=? WHERE id = ?',
+        getTalent: 'SELECT * FROM talent',
+        trainInfo: 'SELECT * FROM trainInfo',
+        addTrainInfo: 'INSERT INTO trainInfo(topic,staff,date,content,id) VALUES (?,?,?,?,0)'
     }
 }
 

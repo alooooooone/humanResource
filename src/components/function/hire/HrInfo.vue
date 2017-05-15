@@ -1,14 +1,15 @@
 <template>
 	<div>
-		<table class="table">
+		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>职位名称</th>
-					<th>职位类别</th>
-					<th>工作类型</th>
-					<th>工作地点</th>
-					<th>招聘人数</th>
-					<th>发布时间</th>
+					<th class="col-sm-2">职位名称</th>
+					<th class="col-sm-2">职位类别</th>
+					<th class="col-sm-2">工作类型</th>
+					<th class="col-sm-2">工作地点</th>
+					<th class="col-sm-2">招聘人数</th>
+					<th class="col-sm-1">发布时间</th>
+					<th class="col-sm-1"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -19,7 +20,7 @@
 					<td class="col-sm-2">{{item.jobaddress}}</td>
 					<td class="col-sm-2">{{item.jobquantity}}</td>
 					<td class="col-sm-1">{{item.releasetime}}</td>
-					<td class="col-sm-1"><a href="" data-toggle="modal" data-target="#detail" v-on:click="jobDetail(index)"><span class="glyphicon glyphicon-heart"></span> 详情>>></a></td>
+					<td class="col-sm-1"><a href="" data-toggle="modal" data-target="#detail" v-on:click="jobDetail(index)"><span class="glyphicon glyphicon-heart"></span> 详情</a></td>
 				</tr>
 			</tbody>
 		</table>
@@ -149,7 +150,7 @@
 				newhireinfo: {}
 			}
 		},
-		mounted: function () {
+		mounted: function() {
 			this.$http.get('/api/user/hrInfo')
 			.then((res) => {
 				this.hrInfo = res.body;
