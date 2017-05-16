@@ -19,6 +19,8 @@ import allUser from '@/components/function/setting/allUser'
 import changePs from '@/components/function/setting/changepassword'
 import talent from '@/components/function/hire/talent'
 import trainInfo from '@/components/function/train/trainInfo'
+import staffPage from '@/components/staffPage/staffPage'
+import personalInfo from '@/components/staffPage/personalInfo'
 
 Vue.use(Router)
 
@@ -82,6 +84,14 @@ export default new Router({
    		path: '/hr',
    		name: 'Hr',
    		component: Hr
-   	}
+   	},
+    {
+      path: '/staff',
+      name: 'staff',
+      component: staffPage,
+      children: [
+        {path:'personalInfo',name:'personalInfo',component:personalInfo}
+      ]
+    }
   ]
 })

@@ -2,9 +2,12 @@
 var sqlMap = {
     // 用户
     user: {
-        add: 'INSERT INTO user(id, username, password) VALUES (0, ?, ?)',
-        check: 'SELECT * FROM user WHERE username = ? AND password = ?',
-        exist: 'SELECT * FROM user WHERE username = ?',
+        addManager: 'INSERT INTO manager(id, username, password) VALUES (0, ?, ?)',
+        addStaff: 'INSERT INTO staff(id, username, password) VALUES (0, ?, ?)',
+        check: 'SELECT * FROM manager WHERE username = ? AND password = ?',
+        exist: 'SELECT * FROM manager WHERE username = ?',
+        existStaff: 'SELECT * FROM staff WHERE username = ?',
+        checkStaff: 'SELECT * FROM staff WHERE username = ? AND password = ?',
         staffInfo: 'SELECT * FROM staffInfo',
         lookfor: 'SELECT * FROM staffInfo WHERE id = ?',
         updateStaff: 'UPDATE staffInfo SET name=?,sex=?,birth=?,education=?,profession=?,address=?,duties=?,salary=?,checkin=?,depart=?,status=?,phone=? WHERE id = ?',
@@ -28,7 +31,7 @@ var sqlMap = {
         updateInterview: 'UPDATE interview SET status=?,pass=? WHERE id = ?',
         getTalent: 'SELECT * FROM talent',
         trainInfo: 'SELECT * FROM trainInfo',
-        addTrainInfo: 'INSERT INTO trainInfo(topic,staff,date,content,id) VALUES (?,?,?,?,0)'
+        addTrainInfo: 'INSERT INTO trainInfo(topic,staff,date,time,place,content,id) VALUES (?,?,?,?,?,?,0)'
     }
 }
 

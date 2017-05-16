@@ -1,9 +1,9 @@
 <template>
 	<div class="container-fluid">
-		<div>
+		<div class="main">
 			<h1 id="title">企业人力资源管理系统</h1>
 			<div id="login">
-				<form class="form-horizontal">
+				<div class="form-horizontal">
 					<div class="form-group">
 					  <label for="username" class="col-sm-2 control-label">用户名:</label>
 					  <div class="col-sm-9">
@@ -16,9 +16,15 @@
 					    <input type="password" class="form-control" id="password" v-model="password">
 					  </div>
 					</div>
-					<button class="btn btn-primary col-sm-offset-5" v-on:click.prevent="checkUser">登录</button>
-					<button class="btn" v-on:click.prevent="createChecknum" data-toggle="modal" data-target="#register">注册</button>
-				</form>
+					<div class="form-group userKind radio">
+						<label><input type="radio" value="staff" name="loginKind" v-model="userKind">员  工</label>
+						<label><input type="radio" value="manager" name="loginKind" v-model="userKind">管理员</label>
+					</div>
+					<div class="btn-group">
+						<button class="btn btn-primary" v-on:click.prevent="checkUser">登录</button>
+						<button class="btn" v-on:click.prevent="createChecknum" data-toggle="modal" data-target="#register">注册</button>
+					</div>
+				</div>
 			</div>
 			<footer>
 				<ul>
@@ -46,6 +52,10 @@
 	        </div>
 	        <div class="modal-body">
 						<form v-bind:style="test1" class="form-horizontal">
+							<div class="form-group userKind radio">
+								<label><input type="radio" value="staff" name="Kind" v-model="regist">员  工</label>
+								<label><input type="radio" value="manager" name="Kind" v-model="regist">管理员</label>
+							</div>
 							<div class="form-group">
 							  <label for="newuser" class="col-sm-3 control-label">用户名:</label>
 							  <div class="col-sm-8">
@@ -106,7 +116,9 @@
 				test2: 'display:none',
 				second: 5,
 				checknum: 0,
-				inputchecknum: ''
+				inputchecknum: '',
+				userKind: 'staff',
+				regist: 'staff'
 			}
 		},
 		created: function () {
@@ -131,7 +143,8 @@
 				}
 				this.$http.post('/api/user/addUser',{
 					username: name,
-					password: pass
+					password: pass,
+					kind: this.regist
 				}).then((res)=>{
 					if(res.body.status == '100'){
 						this.test1 = 'display:none';
@@ -152,13 +165,19 @@
 				var pass = this.password;
 				this.$http.post('/api/user/checkUser',{
 					username: name,
-					password: pass
+					password: pass,
+					userKind: this.userKind
 				}).then((res)=>{
 					if(res.body.status=='100'){
-						var str = JSON.stringify({'username':this.username,'pass':true});
-						//console.log(str);
-						sessionStorage.setItem('status',str);
-						this.$router.push({path:'/welcome'});
+						if(this.userKind === 'manager'){
+							var str = JSON.stringify({'username':this.username,'pass':true,'kind':this.userKind});
+							sessionStorage.setItem('status',str);
+							this.$router.push({path:'/welcome'});
+						}else{
+							var str = JSON.stringify({'username':this.username,'pass':true,'kind':this.userKind});
+							sessionStorage.setItem('status',str);
+							this.$router.push({path:'/staff'});
+						}
 					}else{
 						alert(res.body.msg);
 					}
@@ -175,6 +194,9 @@
 	}
 </script>
 <style>
+	body{
+		height: 100vh
+	}
 	#login{
 		position: absolute;
 		top: 0;right: 0;bottom: 0;left: 0;
@@ -186,6 +208,14 @@
 	#title{
 		margin-top: 10rem;
 		text-align: center
+	}
+	.userKind{
+		text-align: center;
+	}
+	.btn-group{
+		position: absolute;
+		left: 50%;
+		transform: translate(-50%,3rem);
 	}
 	footer{
 		padding: 2rem;

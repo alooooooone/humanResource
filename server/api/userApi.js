@@ -22,41 +22,74 @@ var jsonWrite = function(res, ret) {
 // 增加用户接口
 router.post('/addUser', (req, res) => {
     var params = req.body;
-    console.log(params);
-    conn.query($sql.user.exist, [params.username], function(err, result) {
-        if (err) {
-            console.log(err);
-        }else{
-        	if(result.length == 0){
-        		conn.query($sql.user.add,[params.username,params.password],function (err,result) {
-        			if(err){
-        				console.log(err);
-        			}else{
-        				res.end(JSON.stringify({status:'100',msg:'注册成功!'}));
-        			}
-        		})
-        	}else{
-        		res.end(JSON.stringify({status:'101',msg:'该用户名已经被注册'}));
-        	}
-        }
-    })
+    if(params.kind == 'manager'){
+    	conn.query($sql.user.exist, [params.username], function(err, result) {
+    	    if (err) {
+    	        console.log(err);
+    	    }else{
+    	    	if(result.length == 0){
+    	    		conn.query($sql.user.addManager,[params.username,params.password],function (err,result) {
+    	    			if(err){
+    	    				console.log(err);
+    	    			}else{
+    	    				res.end(JSON.stringify({status:'100',msg:'注册成功!'}));
+    	    			}
+    	    		})
+    	    	}else{
+    	    		res.end(JSON.stringify({status:'101',msg:'该用户名已经被注册'}));
+    	    	}
+    	    }
+    	})
+    }else{
+    	conn.query($sql.user.existStaff, [params.username], function(err, result) {
+    	    if (err) {
+    	        console.log(err);
+    	    }else{
+    	    	if(result.length == 0){
+    	    		conn.query($sql.user.addStaff,[params.username,params.password],function (err,result) {
+    	    			if(err){
+    	    				console.log(err);
+    	    			}else{
+    	    				res.end(JSON.stringify({status:'100',msg:'注册成功!'}));
+    	    			}
+    	    		})
+    	    	}else{
+    	    		res.end(JSON.stringify({status:'101',msg:'该用户名已经被注册'}));
+    	    	}
+    	    }
+    	})
+    }
 });
 //检测账户登录信息
 router.post('/checkUser', (req, res) => {
     var sql = $sql.user.check;
+    var sql1 = $sql.user.checkStaff;
     var params = req.body;
-    //console.log(params);
-    conn.query(sql, [params.username, params.password], function(err, result) {
-        if (err) {
-            throw err;
-        }else{
-        	if (result.length == 1) {
-        	    res.end(JSON.stringify({status:'100',msg:'登录成功'}));
-        	}else{
-        		  res.end(JSON.stringify({status:'101',msg:'用户名或密码错误'}));
-        	}
-        }
-    })
+    if(params.userKind === 'manager'){
+    	conn.query(sql, [params.username, params.password], function(err, result) {
+    	    if (err) {
+    	        throw err;
+    	    }else{
+    	    	if (result.length == 1) {
+    	    	    res.end(JSON.stringify({status:'100',msg:'登录成功'}));
+    	    	}else{
+    	    		  res.end(JSON.stringify({status:'101',msg:'用户名或密码错误'}));
+    	    	}
+    	    }
+    	})
+    }else{
+    	conn.query(sql1, [params.username, params.password], function(err, result) {
+    	    if (err) {
+    	        throw err;
+    	    }else{
+    	    	if (result.length == 1) {
+    	    	    res.end(JSON.stringify({status:'100',msg:'登录成功'}));
+    	    	}else{
+    	    		  res.end(JSON.stringify({status:'101',msg:'用户名或密码错误'}));
+    	    	}
+    	    }
+    	})
+    }
 });
 //获取员工信息
 router.get('/staffInfo', (req, res) => {
@@ -285,5 +318,30 @@ router.get('/trainInfo',(req,res) => {
 		}
 	})
 })
+//添加培训信息
+router.post('/addTrainInfo',(req,res) => {
+	var sql = $sql.user.addTrainInfo;
+	var params = req.body;
+	conn.query(sql,[ params.topic,params.staff,params.date,params.time,params.place,params.content],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.end(JSON.stringify({status:'100',msg:'发布成功'}));
+		}
+	})
+})
+//获取个人信息
+router.post('/personalDetail',(req,res) => {
+	var sql = $sql.user.searchName;
+	var params = req.body;
+	conn.query(sql,[params.username],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.json(result);
+		}
+	})
+})
+
 
 module.exports = router;

@@ -10,25 +10,25 @@
             <span class="icon-bar"></span>
           </button>
           <a href="/" class="navbar-brand">
-            人力资源管理系统
+            员工界面
           </a>
         </div>
         <button class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#modal-example" id="exit">退出</button>
         <button class="btn btn-default navbar-btn navbar-right" v-on:click.prevent>{{username}}</button>
       </div>
     </nav>
-    <div class="col-sm-12">
-    	<ul class="nav nav-tabs">
-    	  <li><a href="/welcome/hr"><span class="glyphicon glyphicon-education"></span> 招聘管理</a></li>
-    	  <li><a href="/welcome/human"><span class="glyphicon glyphicon-user"></span> 人事管理</a></li>
-    	  <li><a href="/welcome/check"><span class="glyphicon glyphicon-time"></span> 考勤管理</a></li>
-    	  <li><a href="/welcome/train"><span class="glyphicon glyphicon-blackboard"></span> 培训管理</a></li>
-    	  <li><a href="/welcome/salary"><span class="glyphicon glyphicon-credit-card"></span> 工资管理</a></li>
-    	  <li><a href="/welcome/setting"><span class="glyphicon glyphicon-cog"></span> 系统设置</a></li>
-    	</ul>
-    </div>
-    <div class="col-sm-12" id="main">
-    	<router-view></router-view>
+    <div class="row" id="main">
+    	<div class="col-sm-3">
+    		<ul class="nav nav-pills nav-stacked" style="text-align: center">
+    			<li role="presentation"><a href="/staff/personalInfo">个人信息</a></li>
+    			<li role="presentation"><a href="/staff/personalCheck">个人考勤</a></li>
+    			<li role="presentation"><a href="/staff/personalTrain">个人培训</a></li>
+    			<li role="presentation"><a href="/staff/safeSetting">安全设置</a></li>
+    		</ul>
+    	</div>
+    	<div class="col-sm-9">
+    		<router-view></router-view>
+    	</div>
     </div>
   </div>
   <div class="modal fade" id="modal-example" tabindex="-1">
@@ -54,45 +54,25 @@
 	export default{
 		data() {
 			return {
-				pass: false,
 				username: JSON.parse(sessionStorage.getItem('status')).username
 			}
 		},
 		created: function(){
 			var status = JSON.parse(sessionStorage.getItem('status'));
-			if(!status.pass || status.kind != 'manager'){
+			if(!status.pass && status.kind != 'staff'){
 				this.$router.replace({path:'/'});
 			}
 		},
-    mounted: function() {
-      $('ul.nav > li').click(function (e) {
-        $('ul.nav > li').removeClass('active');
-        $(this).addClass('active');
-      });
-    },
-		methods: {
-			exit(){
-				var str = JSON.stringify({'username':'none','pass':false});
-				sessionStorage.setItem('status',str);
-				$('#modal-example').modal('hide');
-				this.$router.push({path:'/'});
-			}
+		mounted: function() {
+			$('ul.nav > li').click(function (e) {
+				$('ul.nav > li').removeClass('active');
+				$(this).addClass('active');
+			});
 		}
 	}
 </script>
 <style>
-  #exit{
-    margin-left: 15px;
-    margin-right: 5px;
-  }
-  @media (max-width: 767px) {
-    #exit{
-      position: absolute;
-      top: 0;
-      right: 72px;
-    }
-  }
-  #main{
-  	margin-top: 3rem;
-  }
+	ul li:active{
+		background-color: 'blue'
+	}
 </style>
