@@ -29,7 +29,6 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>员工编号</th>
 					<th>姓名</th>
 					<th>家庭住址</th>
 					<th>电话号码</th>
@@ -39,7 +38,6 @@
 			</thead>
 			<tbody>
 				<tr v-for="(item,index) in staffInfo">
-					<td class="col-sm-1">{{item.id}}</td>
 					<td class="col-sm-2">{{item.name}}</td>
 					<td class="col-sm-2">{{item.address}}</td>
 					<td class="col-sm-2">{{item.phone}}</td>
@@ -124,6 +122,12 @@
 							<div class="form-group col-sm-4">
 								<label for="phone">电话号码:</label>
 								<input type="text" v-bind:readonly="flag" v-model="staffdetail.phone">
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-sm-4">
+								<label for="depart">身份证号:</label>
+								<input type="text" v-bind:readonly="flag" v-model="staffdetail.idnumber">
 							</div>
 						</div>
 					</div>

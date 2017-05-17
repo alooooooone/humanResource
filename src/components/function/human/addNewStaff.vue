@@ -2,7 +2,7 @@
 	<div>
 		<div class="row form-inline">
 			<div class="form-group col-sm-4">
-				<label for="name">姓名:</label>
+				<label for="name">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</label>
 				<input type="text" v-model="newStaff.name" class="form-control">
 			</div>
 			<div class="form-group col-sm-4">
@@ -16,7 +16,7 @@
 		</div>
 		<div class="row form-inline">
 			<div class="form-group col-sm-4">
-				<label for="education">学历:</label>
+				<label for="education">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历:</label>
 				<input type="text" v-model="newStaff.education" class="form-control">
 			</div>
 			<div class="form-group col-sm-4">
@@ -30,7 +30,7 @@
 		</div>
 		<div class="row form-inline">
 			<div class="form-group col-sm-4">
-				<label for="duties">职位:</label>
+				<label for="duties">职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位:</label>
 				<input type="text" v-model="newStaff.duties" class="form-control">
 			</div>
 			<div class="form-group col-sm-4">
@@ -44,7 +44,7 @@
 		</div>
 		<div class="row form-inline">
 			<div class="form-group col-sm-4">
-				<label for="depart">部门:</label>
+				<label for="depart">部&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;门:</label>
 				<input type="text" v-model="newStaff.depart" class="form-control">
 			</div>
 			<div class="form-group col-sm-4">
@@ -54,6 +54,12 @@
 			<div class="form-group col-sm-4">
 				<label for="phone">电话号码:</label>
 				<input type="text" v-model="newStaff.phone" class="form-control">
+			</div>
+		</div>
+		<div class="row form-inline">
+			<div class="form-group col-sm-4">
+				<label for="depart">身份证号:</label>
+				<input type="text" v-model="newStaff.idnumber" class="form-control">
 			</div>
 		</div>
 		<div class="modal-footer">

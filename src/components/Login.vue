@@ -53,25 +53,31 @@
 	        <div class="modal-body">
 						<form v-bind:style="test1" class="form-horizontal">
 							<div class="form-group userKind radio">
-								<label><input type="radio" value="staff" name="Kind" v-model="regist">员  工</label>
-								<label><input type="radio" value="manager" name="Kind" v-model="regist">管理员</label>
+								<label><input type="radio" value="staff" name="Kind" v-model="newUser.regist">员  工</label>
+								<label><input type="radio" value="manager" name="Kind" v-model="newUser.regist">管理员</label>
 							</div>
 							<div class="form-group">
 							  <label for="newuser" class="col-sm-3 control-label">用户名:</label>
 							  <div class="col-sm-8">
-							    <input type="text" class="form-control" id="newuser" v-model="newuser">
+							    <input type="text" class="form-control" id="newuser" v-model="newUser.username">
+							  </div>
+							</div>
+							<div class="form-group">
+							  <label for="newuser" class="col-sm-3 control-label">身份证号:</label>
+							  <div class="col-sm-8">
+							    <input type="text" class="form-control" id="newuser" v-model="newUser.idnumber">
 							  </div>
 							</div>
 							<div class="form-group">
 							  <label for="firstpass" class="col-sm-3 control-label">密码:</label>
 							  <div class="col-sm-8">
-							    <input type="password" class="form-control" id="firstpass" v-model="firstpass">
+							    <input type="password" class="form-control" id="firstpass" v-model="newUser.firstpass">
 							  </div>
 							</div>
 							<div class="form-group">
 							  <label for="secondpass" class="col-sm-3 control-label">确认密码:</label>
 							  <div class="col-sm-8">
-							    <input type="password" class="form-control" id="secondpass" v-model="secondpass">
+							    <input type="password" class="form-control" id="secondpass" v-model="newUser.secondpass">
 							  </div>
 							</div>
 							<div class="form-group">
@@ -109,16 +115,14 @@
 			return{
 				username: 'admin',
 				password: 'admin',
-				newuser: '',
-				firstpass: '',
-				secondpass: '',
 				test1: '',
 				test2: 'display:none',
 				second: 5,
 				checknum: 0,
 				inputchecknum: '',
 				userKind: 'staff',
-				regist: 'staff'
+				regist: 'staff',
+				newUser: {}
 			}
 		},
 		created: function () {
@@ -127,11 +131,10 @@
 		},
 		methods: {
 			addUser() {
-				var name = this.newuser;
 				var timer = null;
 				var self = this;
-				if(this.firstpass == this.secondpass){
-					var pass = this.firstpass;
+				if(this.newUser.firstpass == this.newUser.secondpass){
+					var pass = this.newUser.firstpass;
 				}else{
 					alert('两次密码输入不相同');
 					return false;
@@ -141,11 +144,8 @@
 					self.createChecknum();
 					return false;
 				}
-				this.$http.post('/api/user/addUser',{
-					username: name,
-					password: pass,
-					kind: this.regist
-				}).then((res)=>{
+				this.$http.post('/api/user/addUser',this.newUser)
+				.then((res)=>{
 					if(res.body.status == '100'){
 						this.test1 = 'display:none';
 						this.test2 = 'display:block';
@@ -168,13 +168,14 @@
 					password: pass,
 					userKind: this.userKind
 				}).then((res)=>{
+					console.log(res)
 					if(res.body.status=='100'){
 						if(this.userKind === 'manager'){
 							var str = JSON.stringify({'username':this.username,'pass':true,'kind':this.userKind});
 							sessionStorage.setItem('status',str);
 							this.$router.push({path:'/welcome'});
 						}else{
-							var str = JSON.stringify({'username':this.username,'pass':true,'kind':this.userKind});
+							var str = JSON.stringify({'username':this.username,'pass':true,'kind':this.userKind,'id':res.body.id});
 							sessionStorage.setItem('status',str);
 							this.$router.push({path:'/staff'});
 						}

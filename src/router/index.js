@@ -21,6 +21,9 @@ import talent from '@/components/function/hire/talent'
 import trainInfo from '@/components/function/train/trainInfo'
 import staffPage from '@/components/staffPage/staffPage'
 import personalInfo from '@/components/staffPage/personalInfo'
+import personalTrain from '@/components/staffPage/personalTrain'
+import safeSetting from '@/components/staffPage/safeSetting'
+import allTrainInfo from '@/components/function/train/allTrainInfo'
 
 Vue.use(Router)
 
@@ -59,7 +62,8 @@ export default new Router({
     		name: 'TrainManage',
     		component: TrainManage,
         children: [
-          {path:'traininfo',name: 'trainInfo',component: trainInfo}
+          {path:'traininfo',name: 'trainInfo',component: trainInfo},
+          {path:'alltraininfo',name: 'allTrainInfo',component: allTrainInfo}
         ]
     	},{
     		path: 'salary',
@@ -90,7 +94,9 @@ export default new Router({
       name: 'staff',
       component: staffPage,
       children: [
-        {path:'personalInfo',name:'personalInfo',component:personalInfo}
+        {path:'personalInfo',name:'personalInfo',component:personalInfo},
+        {path:'personalTrain',name:'personalTrain',component:personalTrain},
+        {path:'safeSetting',name:'safeSetting',component:safeSetting},
       ]
     }
   ]
