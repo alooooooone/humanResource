@@ -28,7 +28,7 @@ router.post('/addUser', (req, res) => {
     	        console.log(err);
     	    }else{
     	    	if(result.length == 0){
-    	    		conn.query($sql.user.addManager,[params.username,params.password],function (err,result) {
+    	    		conn.query($sql.user.addManager,[params.username,params.firstpass,params.idnumber],function (err,result) {
     	    			if(err){
     	    				console.log(err);
     	    			}else{
@@ -46,7 +46,7 @@ router.post('/addUser', (req, res) => {
     	        console.log(err);
     	    }else{
     	    	if(result.length == 0){
-    	    		conn.query($sql.user.addStaff,[params.username,params.password],function (err,result) {
+    	    		conn.query($sql.user.addStaff,[params.username,params.firstpass,params.idnumber],function (err,result) {
     	    			if(err){
     	    				console.log(err);
     	    			}else{
@@ -83,7 +83,7 @@ router.post('/checkUser', (req, res) => {
     	        throw err;
     	    }else{
     	    	if (result.length == 1) {
-    	    	    res.end(JSON.stringify({status:'100',msg:'登录成功'}));
+    	    	    res.end(JSON.stringify({status:'100',msg:'登录成功',id:result[0].idnumber}));
     	    	}else{
     	    		  res.end(JSON.stringify({status:'101',msg:'用户名或密码错误'}));
     	    	}
@@ -99,7 +99,6 @@ router.get('/staffInfo', (req, res) => {
             throw err;
         }else{
         		res.json(result);
-        		//console.log(result);
         }
     })
 });
@@ -110,7 +109,7 @@ router.post('/updateStaff',(req,res) => {
 	  //console.log(req.body);
 	  conn.query(sql,[ params.name,params.sex,params.birth,params.education
 	  	,params.profession,params.address,params.duties,params.salary
-	  	,params.checkin,params.depart,params.status,params.phone,params.id ],function (err,result) {
+	  	,params.checkin,params.depart,params.status,params.phone,params.idnumber ],function (err,result) {
 	  		if(err){
 	  			throw err;
 	  		}else{
@@ -307,6 +306,18 @@ router.post('/changePs',(req,res) => {
 		}
 	})
 })
+//修改员工密码
+router.post('/changeStaffPs',(req,res) => {
+	var sql = $sql.user.changeStaffPs;
+	var params = req.body;
+	conn.query(sql,[params.second_new_ps,params.name],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.end(JSON.stringify({status:'100',msg:'修改成功'}));
+		}
+	})
+})
 //获取培训信息
 router.get('/trainInfo',(req,res) => {
 	var sql = $sql.user.trainInfo;
@@ -332,9 +343,9 @@ router.post('/addTrainInfo',(req,res) => {
 })
 //获取个人信息
 router.post('/personalDetail',(req,res) => {
-	var sql = $sql.user.searchName;
+	var sql = $sql.user.personalDetail;
 	var params = req.body;
-	conn.query(sql,[params.username],function (err,result) {
+	conn.query(sql,[params.idnumber],function (err,result) {
 		if(err){
 			throw err;
 		}else{
@@ -342,6 +353,40 @@ router.post('/personalDetail',(req,res) => {
 		}
 	})
 })
-
+//保存个人培训信息
+router.post('/personalTrain',(req,res) => {
+	var sql = $sql.user.personalTrain;
+	var params = req.body;
+	conn.query(sql,[ params.topic,params.name,params.sex,params.depart,params.duties,params.date,params.content,params.experience,params.idnumber],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.end(JSON.stringify({status:'100',msg:'发布成功'}));
+		}
+	})
+})
+//获取个人培训信息
+router.post('/getPersonalT',(req,res) => {
+	var sql = $sql.user.getPersonalT;
+	var params = req.body;
+	conn.query(sql,[ params.idnumber ],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.json(result);
+		}
+	})
+})
+//所有员工培训信息
+router.get('/getAllTrainInfo',(req,res) => {
+	var sql = $sql.user.getAllTrainInfo;
+	conn.query(sql,function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.json(result);
+		}
+	})
+})
 
 module.exports = router;
