@@ -68,7 +68,15 @@
 				$('ul.nav > li').removeClass('active');
 				$(this).addClass('active');
 			});
-		}
+		},
+    methods: {
+      exit:function () {
+        var str = JSON.stringify({'username':'none','pass':false});
+        sessionStorage.setItem('status',str);
+        $('#modal-example').modal('hide');
+        this.$router.push({path:'/'});
+      }
+    }
 	}
 </script>
 <style>

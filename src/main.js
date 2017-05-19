@@ -10,6 +10,9 @@ import $ from 'jquery'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
 
+import vueEventCalendar from 'vue-event-calendar'
+Vue.use(vueEventCalendar, {locale: 'zh'})
+
 Vue.config.productionTip = false
 
 Vue.use(VueResource)

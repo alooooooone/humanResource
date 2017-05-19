@@ -24,6 +24,10 @@ import personalInfo from '@/components/staffPage/personalInfo'
 import personalTrain from '@/components/staffPage/personalTrain'
 import safeSetting from '@/components/staffPage/safeSetting'
 import allTrainInfo from '@/components/function/train/allTrainInfo'
+import checkin from '@/components/staffPage/checkin'
+import checkManage from '@/components/function/check/checkManage'
+import staffCheck from '@/components/function/check/staffCheck'
+import salaryManage from '@/components/function/salary/salaryManage'
 
 Vue.use(Router)
 
@@ -56,7 +60,11 @@ export default new Router({
     	},{
     		path: 'check',
     		name: 'CheckOnWorkManage',
-    		component: CheckOnWorkManage
+    		component: CheckOnWorkManage,
+        children: [
+          {path:'checkManage',name: 'checkManage',component: checkManage},
+          {path:'staffCheck',name: 'staffCheck',component: staffCheck}
+        ]
     	},{
     		path: 'train',
     		name: 'TrainManage',
@@ -68,7 +76,10 @@ export default new Router({
     	},{
     		path: 'salary',
     		name: 'SalaryManage',
-    		component: SalaryManage
+    		component: SalaryManage,
+        children: [
+          {path:'salaryManage',name: 'salaryManage',component: salaryManage}
+        ]
     	},{
     		path: 'setting',
     		name: 'SystemSetting',
@@ -97,6 +108,7 @@ export default new Router({
         {path:'personalInfo',name:'personalInfo',component:personalInfo},
         {path:'personalTrain',name:'personalTrain',component:personalTrain},
         {path:'safeSetting',name:'safeSetting',component:safeSetting},
+        {path:'personalCheck',name:'checkin',component:checkin},
       ]
     }
   ]

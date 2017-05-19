@@ -36,6 +36,20 @@ var sqlMap = {
         personalTrain: 'INSERT INTO personalTrain(topic,name,sex,depart,duties,date,content,experience,idnumber,id) VALUES (?,?,?,?,?,?,?,?,?,0)',
         getPersonalT: 'SELECT * FROM personalTrain WHERE idnumber= ?',
         getAllTrainInfo: 'SELECT * FROM personalTrain',
+        checkinAM: 'INSERT INTO checkinAM(id,idnumber,info,time,date) VALUES (0,?,?,?,?)',
+        checkinPM: 'INSERT INTO checkinPM(id,idnumber,info,time,date) VALUES (0,?,?,?,?)',
+        qingjia: 'INSERT INTO note(id,idnumber,name,leavedate,rebackdate,reason,status,releasetime) VALUES (0,?,?,?,?,?,?,?)',
+        mynote: 'SELECT * FROM note WHERE idnumber = ?',
+        allnote: 'SELECT * FROM note',
+        passnote: 'UPDATE note SET status=? WHERE id=?',
+        notpassnote: 'UPDATE note SET status=?,backreason=? WHERE id=?',
+        mycheckAM: "SELECT * FROM checkinAM WHERE idnumber = ? AND (info ='旷工' OR info ='上班迟到')",
+        mycheckPM: "SELECT * FROM checkinPM WHERE idnumber = ? AND (info ='早退' OR info ='加班')",
+        allcheckAM: "SELECT * FROM checkinAM WHERE info ='旷工' OR info ='上班迟到'",
+        allcheckPM: "SELECT * FROM checkinPM WHERE info ='早退' OR info ='加班'",
+        allwork: "SELECT * FROM typeOfWork",
+        changeSM: "UPDATE typeOfWork SET workname=?,depart=?,salary=? WHERE id=?",
+        addNewWork: "INSERT INTO typeOfWork(id,workname,depart,salary) VALUES(0,?,?,?)"
     }
 }
 

@@ -388,5 +388,165 @@ router.get('/getAllTrainInfo',(req,res) => {
 		}
 	})
 })
+//打卡
+router.post('/checkinAM',(req,res) => {
+	var sql = $sql.user.checkinAM;
+	var params = req.body;
+	conn.query(sql,[ params.idnumber,params.info,params.time,params.date ],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.end(JSON.stringify({status:'100',msg:'打卡成功'}));
+		}
+	})
+})
+router.post('/checkinPM',(req,res) => {
+	var sql = $sql.user.checkinPM;
+	var params = req.body;
+	conn.query(sql,[ params.idnumber,params.info,params.time,params.date ],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.end(JSON.stringify({status:'100',msg:'打卡成功'}));
+		}
+	})
+})
+//假条
+router.post('/qingjia',(req,res) => {
+	var sql = $sql.user.qingjia;
+	var params = req.body;
+	conn.query(sql,[ params.idnumber,params.name,params.leavedate,params.rebackdate,params.reason,params.status,params.releasetime ],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.end(JSON.stringify({status:'100',msg:'请假成功'}));
+		}
+	})
+})
+//个人请假信息
+router.post('/mynote',(req,res) => {
+	var sql = $sql.user.mynote;
+	var params = req.body;
+	conn.query(sql,[ params.idnumber ],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.json(result);
+		}
+	})
+})
+//所有假条
+router.get('/allnote',(req,res) => {
+	var sql = $sql.user.allnote;
+	conn.query(sql,function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.json(result);
+		}
+	})
+})
+//个人考勤查询
+router.post('/mycheckAM',(req,res) => {
+	var sql = $sql.user.mycheckAM;
+	var params = req.body;
+	conn.query(sql,[ params.idnumber ],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.json(result);
+		}
+	})
+})
+router.post('/mycheckPM',(req,res) => {
+	var sql = $sql.user.mycheckPM;
+	var params = req.body;
+	conn.query(sql,[ params.idnumber ],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.json(result);
+		}
+	})
+})
+//请假通过
+router.post('/passnote',(req,res) => {
+	var sql = $sql.user.passnote;
+	var params = req.body;
+	conn.query(sql,[ params.status,params.id ],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.end(JSON.stringify({status:'100',msg:'批准成功'}));
+		}
+	})
+})
+router.post('/notpassnote',(req,res) => {
+	var sql = $sql.user.notpassnote;
+	var params = req.body;
+	conn.query(sql,[ params.status,params.backreason,params.id ],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.end(JSON.stringify({status:'100',msg:'驳回成功'}));
+		}
+	})
+})
+//员工考勤
+router.get('/allcheckAM',(req,res) => {
+	var sql = $sql.user.allcheckAM;
+	conn.query(sql,function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.json(result);
+		}
+	})
+})
+router.get('/allcheckPM',(req,res) => {
+	var sql = $sql.user.allcheckPM;
+	conn.query(sql,function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.json(result);
+		}
+	})
+})
+//所有岗位信息
+router.get('/allwork',(req,res) => {
+	var sql = $sql.user.allwork;
+	conn.query(sql,function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.json(result);
+		}
+	})
+})
+//调整岗位信息
+router.post('/changeSM',(req,res) => {
+	var sql = $sql.user.changeSM;
+	var params = req.body;
+	conn.query(sql,[ params.workname,params.depart,params.salary,params.id ],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.end(JSON.stringify({status:'100',msg:'调整岗位信息成功'}));
+		}
+	})
+})
+//添加新岗位
+router.post('/addNewWork',(req,res) => {
+	var sql = $sql.user.addNewWork;
+	var params = req.body;
+	conn.query(sql,[ params.workname,params.depart,params.salary ],function (err,result) {
+		if(err){
+			throw err;
+		}else{
+			res.end(JSON.stringify({status:'100',msg:'添加岗位成功'}));
+		}
+	})
+})
 
 module.exports = router;
